@@ -1,4 +1,4 @@
-package java.com.mimepapelaria;
+package com.mimepapelaria;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MimePapelariaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MimePapelariaApplication.class, args);
+        SpringApplication.run(com.mimepapelaria.MimePapelariaApplication.class, args);
     }
-
 }

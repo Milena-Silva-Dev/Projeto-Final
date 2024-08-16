@@ -5,9 +5,12 @@ import com.mimepapelaria.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -16,35 +19,34 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping
-    public ResponseEntity<List<Usuario>> listarUsuarios() {
-        List<Usuario> usuarios = usuarioService.listarUsuarios();
-        return ResponseEntity.ok(usuarios);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable int id) {
-        Usuario usuario = usuarioService.buscarUsuarioPorId(id);
-        return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
-    }
-
-    @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
+    @PostMapping("/cadastrar")
+    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
         Usuario usuarioCriado = usuarioService.criarUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCriado);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizarUsuarioParcial(@PathVariable int id, @RequestBody Usuario usuarioAtualizado) {
-        Usuario usuarioAtualizadoResponse = usuarioService.atualizarUsuarioParcial(id, usuarioAtualizado);
-        if (usuarioAtualizadoResponse == null) {
-            return ResponseEntity.notFound().build();
+    @PutMapping("/me")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario usuarioAtualizado) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUsuarioAtual = authentication.getName();
+        Optional<Usuario> usuarioOptional = usuarioService.buscarUsuarioPorEmail(emailUsuarioAtual);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuarioExistente = usuarioOptional.get();
+            usuarioAtualizado.setId(usuarioExistente.getId());
+            Usuario usuarioAtualizadoResponse = usuarioService.atualizarUsuarioParcial(usuarioExistente.getId(), usuarioAtualizado);
+            return ResponseEntity.ok(usuarioAtualizadoResponse);
         }
-        return ResponseEntity.ok(usuarioAtualizadoResponse);
+        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable int id) {
-        return usuarioService.deletarUsuario(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    @GetMapping("/me")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<Usuario> getUsuarioAtual() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUsuarioAtual = authentication.getName();
+        Optional<Usuario> usuarioOptional = usuarioService.buscarUsuarioPorEmail(emailUsuarioAtual);
+        return usuarioOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

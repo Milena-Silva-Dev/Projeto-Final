@@ -36,6 +36,18 @@ public class Carrinho {
     @Column(name = "preco", nullable = false)
     private double preco;
 
+    public double getTotalItemValue() {
+        return quantidade * preco;
+    }
+
+    public boolean validateStock() {
+        return produto.hasStock(quantidade);
+    }
+
+    public void updateStock() {
+        produto.updateStock(quantidade);
+    }
+
     @Override
     public String toString() {
         return "Carrinho{" +

@@ -21,6 +21,9 @@ public class Usuario {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "role", nullable = false)
+    private String role;
+
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 
@@ -69,6 +72,8 @@ public class Usuario {
                 ", municipio='" + municipio + '\'' +
                 ", cep='" + cep + '\'' +
                 ", uf='" + uf + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
+
 }

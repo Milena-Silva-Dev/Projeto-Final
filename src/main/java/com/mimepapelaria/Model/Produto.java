@@ -28,7 +28,7 @@ public class Produto {
     private String descricao;
 
     @Lob
-    @Column(name = "imagem", nullable = false)
+    @Column(name = "imagem")
     private byte[] imagem;
 
     @Column(name = "preco", nullable = false)
@@ -36,6 +36,17 @@ public class Produto {
 
     @Column(name = "categoria", nullable = false, length = 50)
     private String categoria;
+
+    @Column(name = "estoque", nullable = false)
+    private int estoque;
+
+    public boolean hasStock(int quantity) {
+        return estoque >= quantity;
+    }
+
+    public void updateStock(int quantity) {
+        this.estoque -= quantity;
+    }
 
     @Override
     public String toString() {

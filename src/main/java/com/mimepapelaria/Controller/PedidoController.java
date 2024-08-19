@@ -3,6 +3,7 @@ package com.mimepapelaria.Controller;
 import com.mimepapelaria.Model.Pedido;
 import com.mimepapelaria.Service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,16 +16,19 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public Pedido createPedido(@RequestBody Pedido pedido) {
         return pedidoService.save(pedido);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public Pedido getPedidoById(@PathVariable int id) {
         return pedidoService.findById(id);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public List<Pedido> getAllPedidos() {
         return pedidoService.findAll();
     }

@@ -3,6 +3,7 @@ package com.mimepapelaria.Controller;
 import com.mimepapelaria.Model.Usuario;
 import com.mimepapelaria.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -10,6 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @RestController
@@ -26,7 +31,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/me")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario usuarioAtualizado) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUsuarioAtual = authentication.getName();
@@ -39,14 +44,5 @@ public class UsuarioController {
             return ResponseEntity.ok(usuarioAtualizadoResponse);
         }
         return ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/me")
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<Usuario> getUsuarioAtual() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String emailUsuarioAtual = authentication.getName();
-        Optional<Usuario> usuarioOptional = usuarioService.buscarUsuarioPorEmail(emailUsuarioAtual);
-        return usuarioOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

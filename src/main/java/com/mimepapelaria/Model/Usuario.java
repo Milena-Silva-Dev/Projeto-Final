@@ -1,10 +1,14 @@
 package com.mimepapelaria.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,14 +19,21 @@ import lombok.Setter;
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "cpf")
 })
-public class Usuario {
+public class Usuario implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "role", nullable = false)
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_role", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = @UniqueConstraint(columnNames = {"usuario_id", "role_id"}))
+    @JsonProperty("roles")
+    @JsonIgnoreProperties(value = { "usuarios" })
+    private List<Role> roles = new ArrayList<>();
 
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
@@ -59,21 +70,19 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", rg='" + rg + '\'' +
-                ", rua='" + rua + '\'' +
-                ", numero=" + numero +
-                ", cidade='" + cidade + '\'' +
-                ", municipio='" + municipio + '\'' +
-                ", cep='" + cep + '\'' +
-                ", uf='" + uf + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+      return "Usuario{" +
+        "id=" + id +
+        ", nome='" + nome + '\'' +
+        ", email='" + email + '\'' +
+        ", senha='" + senha + '\'' +
+        ", cpf='" + cpf + '\'' +
+        ", rg='" + rg + '\'' +
+        ", rua='" + rua + '\'' +
+        ", numero=" + numero +
+        ", cidade='" + cidade + '\'' +
+        ", municipio='" + municipio + '\'' +
+        ", cep='" + cep + '\'' +
+        ", uf='" + uf + '\'' +
+        '}';
     }
-
 }

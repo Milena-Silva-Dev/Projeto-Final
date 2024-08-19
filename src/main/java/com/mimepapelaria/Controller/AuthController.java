@@ -17,30 +17,30 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtService jwtService;
+  @Autowired
+  private JwtService jwtService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestParam String email, @RequestParam String senha) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, senha)
-        );
+  @PostMapping("/login")
+  public ResponseEntity<?> authenticateUser(@RequestParam String email, @RequestParam String senha) {
+    Authentication authentication = authenticationManager.authenticate(
+      new UsernamePasswordAuthenticationToken(email, senha)
+    );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String role = authentication.getAuthorities().stream()
-                .map(grantedAuthority -> grantedAuthority.getAuthority())
-                .collect(Collectors.joining(","));
+    String role = authentication.getAuthorities().stream()
+      .map(grantedAuthority -> grantedAuthority.getAuthority())
+      .collect(Collectors.joining(","));
 
-        String jwt = jwtService.generateToken(email, role);
+    String jwt = jwtService.generateToken(email, role);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("accessToken", jwt);
-        response.put("tokenType", "Bearer");
+    Map<String, String> response = new HashMap<>();
+    response.put("accessToken", jwt);
+    response.put("tokenType", "Bearer");
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 }

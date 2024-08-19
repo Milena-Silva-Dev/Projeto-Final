@@ -1,12 +1,16 @@
 package com.mimepapelaria.Service;
 
+import com.mimepapelaria.Model.Role;
 import com.mimepapelaria.Model.Usuario;
+import com.mimepapelaria.Repository.RoleRepository;
 import com.mimepapelaria.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +19,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -32,15 +39,23 @@ public class UsuarioService {
     }
 
     public Usuario criarUsuario(Usuario usuario) {
-        usuario.setRole("USER");
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        return usuarioRepository.save(usuario);
+      Role userRole= roleRepository.findByNome("USER");
+      if (userRole == null) {
+        throw new RuntimeException("Role 'USER' não encontrada");
+      }
+      usuario.setRoles(Collections.singletonList(userRole));
+      usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+      return usuarioRepository.save(usuario);
     }
 
     public Usuario criarAdmin(Usuario usuario) {
-        usuario.setRole("ADMIN");
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        return usuarioRepository.save(usuario);
+      Role adminRole= roleRepository.findByNome("ADMIN");
+      if (adminRole == null) {
+        throw new RuntimeException("Role 'ADMIN' não encontrada");
+      }
+      usuario.setRoles(Collections.singletonList(adminRole));
+      usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+      return usuarioRepository.save(usuario);
     }
 
     @Transactional

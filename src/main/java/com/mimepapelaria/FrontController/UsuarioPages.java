@@ -8,7 +8,11 @@ public class UsuarioPages {
 
   @GetMapping("/api/usuarios/cadastrar")
   public String cadastro() {
-    return "cadastro"; // Nome do arquivo HTML sem a extensão .html
+    return "cadastro";
   }
 
+  @GetMapping("/api/auth/login")
+  public String login() {
+    return "login";
+  }
 }

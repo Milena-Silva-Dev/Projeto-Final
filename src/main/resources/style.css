@@ -1,4 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;700&display=swap'); /* CSS Global */
+
 body {
   background-color: #F8EEFF;
   font-family: 'Teko', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #F57978;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading {
+  text-align: center;
+  font-weight: bold;
+  margin: 20px 0;
+  display: none;
+}
+
+/* Estilos para o Header */
+
+
+body {
+  margin: 0;
+  font-family: 'Teko', sans-serif;
+  zoom: 110%;
+}
+
+header {
+  background-color: #F8EEFF;
+  padding: 10px 20px;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-container img {
+  height: 80px; /* Ajuste conforme necessário */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 100px; /* Espaçamento igual entre os itens */
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black; /* Fonte preta */
+  font-size: 20px; /* Ajuste conforme necessário */
+}
+
+.nav-icon {
+  height: 24px; /* Ajuste conforme necessário */
+  margin-right: 15px; /* Espaço entre o ícone e o texto */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+.search-icon {
+  height: 24px; /* Ajuste conforme necessário */
+  margin-left: 8px; /* Espaço entre o campo de busca e o ícone */
 }

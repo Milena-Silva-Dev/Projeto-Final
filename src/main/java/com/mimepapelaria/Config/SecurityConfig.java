@@ -53,7 +53,7 @@ public class SecurityConfig {
         .requestMatchers("/api/usuarios/me**").hasAnyRole("ADMIN", "USER")
         .requestMatchers("/api/carrinho/**").hasAnyRole("ADMIN", "USER")
         .requestMatchers("/api/pedidos/**").hasAnyRole("ADMIN", "USER")
-        .requestMatchers("/auth/**").permitAll()
+        .requestMatchers("/api/auth/login**").permitAll()
         .anyRequest().permitAll()
       )
       .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

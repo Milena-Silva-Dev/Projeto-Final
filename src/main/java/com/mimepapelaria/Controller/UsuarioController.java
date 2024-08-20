@@ -11,10 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +19,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
     @PostMapping("/cadastrar")
     public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
         Usuario usuarioCriado = usuarioService.criarUsuario(usuario);

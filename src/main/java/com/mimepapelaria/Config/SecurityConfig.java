@@ -1,4 +1,5 @@
 package com.mimepapelaria.Config;
+import com.mimepapelaria.Repository.UsuarioRepository;
 import com.mimepapelaria.Service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,9 @@ public class SecurityConfig {
   @Autowired
   private AuthenticationConfiguration authenticationConfiguration;
 
+  @Autowired
+  private UsuarioRepository usuarioRepository;
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -49,11 +53,14 @@ public class SecurityConfig {
         .requestMatchers("/api/usuarios/cadastrar**").permitAll()
         .requestMatchers("/api/admin/cadastrar**").permitAll()
         .requestMatchers("/api/usuarios/produtos**").permitAll()
-        .requestMatchers("/api/usuarios/**").hasAnyRole("ADMIN", "USER")
-        .requestMatchers("/api/usuarios/me**").hasAnyRole("ADMIN", "USER")
-        .requestMatchers("/api/carrinho/**").hasAnyRole("ADMIN", "USER")
-        .requestMatchers("/api/pedidos/**").hasAnyRole("ADMIN", "USER")
+        .requestMatchers("/api/usuarios/**").permitAll()
+        .requestMatchers("/api/usuarios/me").permitAll()
+        .requestMatchers("/api/carrinho/**").permitAll()
+        .requestMatchers("/api/pedidos/**").permitAll()
         .requestMatchers("/api/auth/login**").permitAll()
+        .requestMatchers("/api/usuarios/produtos/home**").permitAll()
+        .requestMatchers("http://localhost:8080/home").permitAll()
+        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
         .anyRequest().permitAll()
       )
       .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -74,6 +81,7 @@ public class SecurityConfig {
 
     JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
     jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+    jwtAuthenticationConverter.setPrincipalClaimName("sub");
     return jwtAuthenticationConverter;
   }
 

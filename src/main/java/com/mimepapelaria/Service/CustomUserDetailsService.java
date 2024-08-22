@@ -18,17 +18,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      Usuario usuario = usuarioRepository.findByEmail(username)
-        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com e-mail: " + username));
+        Usuario usuario = usuarioRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com e-mail: " + username));
 
-      String[] roles = usuario.getRoles().stream()
-        .map(Role::getNome)
-        .toArray(String[]::new);
+        String[] roles = usuario.getRoles().stream()
+                .map(Role::getNome)
+                .toArray(String[]::new);
 
-      return User.builder()
-        .username(usuario.getEmail())
-        .password(usuario.getSenha())
-        .roles(roles)
-        .build();
-   }
+        return User.builder()
+                .username(usuario.getEmail())
+                .password(usuario.getSenha())
+                .roles(roles)
+                .build();
+    }
 }

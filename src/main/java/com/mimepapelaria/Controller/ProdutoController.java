@@ -14,7 +14,7 @@ public class ProdutoController {
     @Autowired
     private ProdutoService productService;
 
-    @GetMapping
+    @GetMapping("")
     public List<Produto> getAllProducts() {
         return productService.findAll();
     }
@@ -23,4 +23,5 @@ public class ProdutoController {
     public Produto getProductById(@PathVariable Long id) {
         return productService.findById(id);
     }
+
 }

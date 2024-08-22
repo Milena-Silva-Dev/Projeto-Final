@@ -30,7 +30,7 @@
     .form-container h2 {
       text-align: center;
       margin-bottom: 20px;
-      font-size: 20px; /* Diminuir o tamanho do texto "Login" */
+      font-size: 20px;
       font-family: 'Teko', sans-serif;
     }
 
@@ -51,7 +51,7 @@
 
     .form-container .checkbox-label {
       display: flex;
-      justify-content: center; /* Centraliza o conteúdo */
+      justify-content: center;
       align-items: center;
       margin-bottom: 20px;
     }
@@ -94,58 +94,60 @@
     }
 
     .logo-container img {
-      max-width: 200px; /* Aumenta o tamanho do logo */
+      max-width: 200px;
     }
   </style>
 </head>
 <body>
 <div class="form-container">
   <div class="logo-container">
-    <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/logo.jpg" alt="Logo">
+    <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/logo.jpg" alt="Logo">
   </div>
   <h2>Login</h2>
-  <form action="http://localhost:8080/api/auth/login" method="post">
+  <form id="login-form">
     <input type="email" name="email" placeholder="E-mail" required>
     <input type="password" name="senha" placeholder="Senha" required>
     <div class="checkbox-label">
       <input type="checkbox" id="remember-me">
       <label for="remember-me">Manter conectado</label>
     </div>
-    <button type="submit" class="login-btn">Login</button>
+    <button type="submit" class="login-btn">Login</button >
   </form>
   <button type="button" class="signup-btn" onclick="window.location.href='http://localhost:8080/api/usuarios/cadastrar'">Cadastre-se</button>
   <div class="forgot-password">
     <a href="#">Esqueceu a senha?</a>
   </div>
 </div>
-</body>
 
 <script>
-  function login() {
-    var email = document.getElementById('email').value;
-    var senha = document.getElementById('senha').value;
+  document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    fetch('/api/auth/login', {
+    var formData = new FormData(this);
+    var email = formData.get('email');
+    var senha = formData.get('senha');
+
+    fetch('http://localhost:8080/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: new URLSearchParams({
-        email: email,
-        senha: senha
+        'email': email,
+        'senha': senha
       })
     })
-            .then(response => response.json())
-            .then(data => {
-              if (data.accessToken) {
-                // Define o cookie com o token
-                document.cookie = `accessToken=${data.accessToken}; path=/; secure; samesite=strict`;
-                window.location.href = '/home'; // Redireciona para a página home após login
+            .then(response => {
+              if (response.ok) {
+                window.location.href = '/home';
               } else {
-                console.error('Login failed:', data);
+                alert('Falha no login. Verifique suas credenciais.');
               }
             })
-            .catch(error => console.error('Error:', error));
-  }
+            .catch(error => {
+              console.error('Erro:', error);
+            });
+  });
 </script>
+</body>
 </html>

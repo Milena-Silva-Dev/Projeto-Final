@@ -1,5 +1,7 @@
 package com.mimepapelaria.Service;
 
+import com.mimepapelaria.Model.Usuario;
+import com.mimepapelaria.Repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -7,10 +9,14 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
+import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -22,7 +28,10 @@ public class JwtService {
   @Autowired
   private CustomUserDetailsService userDetailsService;
 
-public String generateToken(String username, String role) {
+  @Autowired
+  private UsuarioRepository usuarioRepository;
+
+  public String generateToken(String username, String role) {
     return Jwts.builder()
       .setSubject(username)
       .claim("role", role)
@@ -45,16 +54,15 @@ public String generateToken(String username, String role) {
   }
 
   public Authentication getAuthentication(String token) {
-    Claims claims = Jwts.parser()
-      .setSigningKey(SECRET_KEY)
-      .parseClaimsJws(token)
-      .getBody();
-
+    Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     String email = claims.getSubject();
-    String role = (String) claims.get("role");
-
     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-  }
 
+    Collection<SimpleGrantedAuthority> authorities = userDetails.getAuthorities()
+            .stream()
+            .map(auth -> new SimpleGrantedAuthority(auth.getAuthority()))
+            .collect(Collectors.toList());
+
+    return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+  }
 }

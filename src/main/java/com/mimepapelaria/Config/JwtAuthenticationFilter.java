@@ -2,6 +2,7 @@ package com.mimepapelaria.Config;
 
 import com.mimepapelaria.Service.JwtService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.AuthenticationException;
 import jakarta.servlet.FilterChain;
@@ -20,15 +21,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   }
 
   @Override
-  public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)throws AuthenticationException {
-    String header= request.getHeader("Authorization");
+  public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    String header = request.getHeader("Authorization");
 
     if (header != null && header.startsWith("Bearer ")) {
-      String token= header.substring(7);
+      String token = header.substring(7);
+      System.out.println("Token Received: " + token);
+
       if (jwtService.isValidToken(token)) {
-        Authentication auth= jwtService.getAuthentication(token);
-        System.out.println("Token: " + token);
-        System.out.println("Authorities: " + auth.getAuthorities());
+        Authentication auth = jwtService.getAuthentication(token);
         return auth;
       } else {
         throw new AuthenticationException("Invalid JWT token") {};
@@ -40,6 +41,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    SecurityContextHolder.getContext().setAuthentication(authResult);
     chain.doFilter(request, response);
   }
 

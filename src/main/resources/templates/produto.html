@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.1">
+    <title>Página Produto</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Gerais */
+        body {
+            margin: 0;
+            font-family: 'Teko', sans-serif;
+        }
+
+        /* Products Section */
+        .products-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .product-card {
+            display: flex;
+            align-items: center;
+            background-color: #F8EEFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 80%;
+            max-width: 900px;
+            margin: 20px;
+        }
+
+        .product-image {
+            width: 40%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .product-info {
+            margin-left: 20px;
+            width: 60%;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 24px;
+            margin: 10px 0;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .product-description {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #F57978;
+            margin: 10px 0;
+            font-family: 'Teko', sans-serif;
+        }
+
+        /* Quantidade e Botões de Ação */
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .quantity-button {
+            background-color: #F57978;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 10px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .quantity-button:hover {
+            background-color: #B36F6F;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .add-to-cart-button {
+            background-color: #F57978;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: #B36F6F;
+        }
+
+        .remove-from-cart-button {
+            background-color: #B36F6F;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+            margin-top: 5px;
+        }
+
+        .remove-from-cart-button:hover {
+            background-color: #A24B4B;
+        }
+
+        /* Outros estilos */
+        .input-field {
+            font-family: 'Teko', sans-serif;
+        }
+
+        .subscribe-button {
+            font-family: 'Teko', sans-serif;
+        }
+
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/logo-1.png" alt="Logo 1" class="logo-image">
+            <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/logo-2.png" alt="Logo 2" class="logo-image">
+        </div>
+        <nav class="nav-links">
+            <a href="#">
+                <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/atendimento-icon.png" alt="Atendimento" class="nav-icon">
+                Atendimento
+            </a>
+            <a href="#">
+                <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/pedidos-icon.png" alt="Pedidos" class="nav-icon">
+                Meus Pedidos
+            </a>
+            <a href="#">
+                <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/usuario-icon.png" alt="Minha Conta" class="nav-icon">
+                Minha Conta
+            </a>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar...">
+                <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/busca-icon.png" alt="Buscar" class="search-icon">
+            </div>
+            <a href="#">
+                <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/carrinho-icon.png" alt="Carrinho" class="nav-icon">
+            </a>
+        </nav>
+    </div>
+
+    <div class="filter-container">
+        <div class="filter-item">Todos os produtos</div>
+        <div class="filter-options">
+            <a href="#">Escrita</a>
+            <a href="#">Papelaria</a>
+            <a href="#">Cadernos</a>
+            <a href="#">Carimbos</a>
+            <a href="#">Presentes</a>
+            <a href="#">Kits</a>
+        </div>
+        <div class="filter-item">Novidades</div>
+    </div>
+</header>
+
+
+<main>
+    <section class="products-section">
+        <div class="container-fluid">
+            <div class="product-card">
+                <img th:src="@{${produto.imagem}}" alt="Imagem do produto" class="product-image">
+                <div class="product-info">
+                    <h2 th:text="${produto.nome}" class="product-title">Nome do Produto</h2>
+                    <p th:text="${produto.descricao}" class="product-description">Descrição do Produto</p>
+                    <p th:text="'R$ ' + ${produto.preco}" class="product-price">Preço do Produto</p>
+
+                    <div class="quantity-container">
+                        <button class="quantity-button" onclick="decrementQuantity()">-</button>
+                        <input type="number" id="quantity" value="1" min="1" class="quantity-input">
+                        <button class="quantity-button" onclick="incrementQuantity()">+</button>
+                    </div>
+
+                    <button class="add-to-cart-button" onclick="addToCart()">Adicionar</button>
+                    <button class="remove-from-cart-button" onclick="removeFromCart()">Remover</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer-container">
+    <div class="subscription-container">
+        <div class="subscription-info">
+            Inscreva-se para receber novidades!
+        </div>
+        <div class="subscription-form">
+            <input type="text" placeholder="Nome" class="input-field">
+            <input type="email" placeholder="Email" class="input-field">
+            <button class="subscribe-button">Cadastrar</button>
+        </div>
+    </div>
+
+    <div class="footer-info-container">
+        <div class="footer-info">
+            <div class="footer-logo">
+                <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/logo.jpg" alt="Logo">
+            </div>
+            <div class="footer-details">
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <h4><a href="#">Sobre</a></h4>
+                        <a href="#">Termos e Condições</a>
+                        <a href="#">Privacidade</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contato</h4>
+                        <p>Endereço: Rua Exemplo, 123, Bairro, Cidade</p>
+                        <p>Horário de Atendimento: Seg - Sex, 9h - 18h</p>
+                        <h4><p>Email: <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></p></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Todos os direitos reservados. CNPJ: 12.345.678/0001-90</p>
+        </div>
+    </div>
+</footer>
+</body>
+<script>
+    function incrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    }
+
+    function decrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        if (parseInt(quantityInput.value) > 1) {
+            quantityInput.value = parseInt(quantityInput.value) - 1;
+        }
+    }
+
+    function addToCart() {
+        var quantity = document.getElementById('quantity').value;
+        alert("Adicionado ao carrinho: " + quantity + " item(s)");
+    }
+
+    function removeFromCart() {
+        var quantity = document.getElementById('quantity').value;
+        alert("Removido do carrinho: " + quantity + " item(s)");
+    }
+</script>
+</html>

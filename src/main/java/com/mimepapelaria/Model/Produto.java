@@ -36,7 +36,7 @@ public class Produto implements Serializable {
 
     @Lob
     @Column(name = "imagem")
-    private byte[] imagem;
+    private String imagem;
 
     @Column(name = "preco", nullable = false)
     private double preco;

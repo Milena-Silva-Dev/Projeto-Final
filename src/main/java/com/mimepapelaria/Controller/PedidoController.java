@@ -16,19 +16,16 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
     public Pedido createPedido(@RequestBody Pedido pedido) {
         return pedidoService.save(pedido);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
     public Pedido getPedidoById(@PathVariable int id) {
         return pedidoService.findById(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public List<Pedido> getAllPedidos() {
         return pedidoService.findAll();
     }

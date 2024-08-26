@@ -114,6 +114,107 @@
 
         .filter-item:first-child {
             text-align: left;
+        }/* Estilos para o Header */
+
+        body {
+            margin: 0;
+            font-family: 'Teko', sans-serif;
+            zoom: 110%;
+        }
+
+        header {
+            background-color: #F8EEFF;
+            padding: 10px 10px;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container img {
+            height: 70px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 100px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+        }
+
+        .nav-icon {
+            height: 28px;
+            margin-right: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            padding: 5px;
+            border-radius: 20px;
+        }
+
+        .search-icon {
+            height: 24px;
+            margin-left: 8px;
+        }
+
+        .filter-container {
+            background-color: #F57978;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: black;
+            font-size: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .filter-options {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .filter-options a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .filter-options a:hover {
+            text-decoration: underline;
+        }
+
+        .filter-item:last-child {
+            text-align: right;
+        }
+
+        .filter-item:first-child {
+            text-align: left;
         }
 
         /* Estilo para o carrossel */
@@ -227,7 +328,6 @@
         .subscribe-button:hover {
             background-color: #B3A1D1;
         }
-
 
         .footer-info-container {
             background-color: #F8EEFF;
@@ -347,7 +447,6 @@
             object-fit: cover;
         }
 
-        /* Estilo para a seção de produtos */
         /* Estilo para a seção de produtos */
         .products-section {
             background-color: #F8EEFF;
@@ -600,8 +699,8 @@
     window.onload = loadProducts;
 
 
-    function fetchUserInfo() {
-        fetch('http://localhost:8080/api/usuarios/me', {
+    function fetchUserInfo(userId) {
+        fetch(`http://localhost:8080/api/usuarios/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -632,6 +731,8 @@
             .catch(error => {
                 console.error('Erro:', error);
             });
+
+        console.log('Token JWT:', localStorage.getItem('token'));
     }
 
     function fetchProductInfo(productId) {

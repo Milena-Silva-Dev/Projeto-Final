@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -31,21 +29,21 @@ public class JwtService {
   @Autowired
   private UsuarioRepository usuarioRepository;
 
-  public String generateToken(String username, String role) {
+  public String generateToken(String email, String role) {
     return Jwts.builder()
-      .setSubject(username)
-      .claim("role", role)
-      .setIssuedAt(new Date())
-      .setExpiration(new Date(System.currentTimeMillis() + 864_000_00))
-      .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-      .compact();
+            .setSubject(email)
+            .claim("role", role)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + 864_000_00))
+            .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+            .compact();
   }
 
   public boolean isValidToken(String token) {
     try {
       Jwts.parser()
-        .setSigningKey(SECRET_KEY)
-        .parseClaimsJws(token);
+              .setSigningKey(SECRET_KEY)
+              .parseClaimsJws(token);
       return true;
     } catch (Exception e) {
       System.err.println("Invalid token: " + e.getMessage());

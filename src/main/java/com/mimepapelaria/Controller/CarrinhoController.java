@@ -3,7 +3,6 @@ package com.mimepapelaria.Controller;
 import com.mimepapelaria.Model.Carrinho;
 import com.mimepapelaria.Service.CarrinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,23 +12,25 @@ import java.util.List;
 public class CarrinhoController {
 
     @Autowired
-    private CarrinhoService CarrinhoService;
+    private CarrinhoService carrinhoService;
 
-    @PostMapping("/{productId}")
-    @PreAuthorize("hasRole('USER')")
-    public void addToCart(@PathVariable Long productId) {
-        CarrinhoService.addProductToCart(productId);
+    @PostMapping("/{produtoId}")
+    public void addToCart(@PathVariable Long produtoId) {
+        carrinhoService.addProductToCart(produtoId);
     }
 
-    @DeleteMapping("/{productId}")
-    @PreAuthorize("hasRole('USER')")
-    public void removeFromCart(@PathVariable Long productId) {
-        CarrinhoService.removeProductFromCart(productId);
+    @DeleteMapping("/{produtoId}")
+    public void removeFromCart(@PathVariable Long produtoId) {
+        carrinhoService.removeProductFromCart(produtoId);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public List<Carrinho> getCart() {
-        return CarrinhoService.getUserCart();
+        return carrinhoService.getUserCart();
+    }
+
+    @GetMapping("/quantidade")
+    public int getCartQuantity() {
+        return carrinhoService.getCartQuantity();
     }
 }

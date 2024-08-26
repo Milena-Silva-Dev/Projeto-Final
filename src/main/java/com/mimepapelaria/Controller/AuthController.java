@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +27,14 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@RequestParam String email, @RequestParam String senha) {
     Authentication authentication = authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(email, senha)
+            new UsernamePasswordAuthenticationToken(email, senha)
     );
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     String role = authentication.getAuthorities().stream()
-      .map(grantedAuthority -> grantedAuthority.getAuthority())
-      .collect(Collectors.joining(","));
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(","));
 
     String jwt = jwtService.generateToken(email, role);
 

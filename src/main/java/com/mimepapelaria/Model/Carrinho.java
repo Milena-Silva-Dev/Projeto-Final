@@ -26,7 +26,7 @@ public class Carrinho implements Serializable {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne

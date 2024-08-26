@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.1">
     <title>Página Produto</title>
-    <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Estilos Gerais */
@@ -14,24 +13,17 @@
             font-family: 'Teko', sans-serif;
         }
 
-        /* Products Section */
-        .products-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
         .product-card {
             display: flex;
             align-items: center;
+            justify-content: center; /* Centraliza o conteúdo internamente */
             background-color: #F8EEFF;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
             width: 80%;
             max-width: 900px;
-            margin: 20px;
+            margin: 20px auto; /* Centraliza a card horizontalmente na página */
         }
 
         .product-image {
@@ -63,6 +55,108 @@
             color: #F57978;
             margin: 10px 0;
             font-family: 'Teko', sans-serif;
+        }
+
+        /* Estilos para o Header */
+        body {
+            margin: 0;
+            font-family: 'Teko', sans-serif;
+            zoom: 110%;
+        }
+
+        header {
+            background-color: #F8EEFF;
+            padding: 10px 10px;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container img {
+            height: 70px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 100px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+        }
+
+        .nav-icon {
+            height: 28px;
+            margin-right: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            padding: 5px;
+            border-radius: 20px;
+        }
+
+        .search-icon {
+            height: 24px;
+            margin-left: 8px;
+        }
+
+        .filter-container {
+            background-color: #F57978;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: black;
+            font-size: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .filter-options {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .filter-options a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .filter-options a:hover {
+            text-decoration: underline;
+        }
+
+        .filter-item:last-child {
+            text-align: right;
+        }
+
+        .filter-item:first-child {
+            text-align: left;
         }
 
         /* Quantidade e Botões de Ação */
@@ -136,6 +230,148 @@
             font-family: 'Teko', sans-serif;
         }
 
+        /* Estilos para o Footer */
+        footer {
+            background-color: #F57978;
+            padding: 10px 10px;
+            border-radius: 15px;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .subscription-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #F8EEFF;
+            padding: 10px 21px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 840px;
+            margin: 0 auto;
+        }
+
+        .subscription-info {
+            font-size: 20px;
+            color: black;
+            margin-right: 14px;
+        }
+
+        .subscription-form {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
+            font-size: 20px;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .input-field {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 12px;
+            flex: 2;
+            min-width: 140px;
+        }
+
+        .subscribe-button {
+            background-color: #F57978;
+            color: black;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .subscribe-button:hover {
+            background-color: #B3A1D1;
+        }
+
+        .footer-info-container {
+            background-color: #F8EEFF;
+            padding: 20px 10px;
+            margin-top: 20px;
+            width: 50%;
+            box-sizing: border-box;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+        }
+
+        .footer-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 30%;
+            max-width: 300px;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: auto;
+        }
+
+        .footer-details {
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+            color: #333;
+            width: 70%;
+            border-top: 10px;
+            padding-top: 40px;
+        }
+
+        .footer-details a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .footer-details a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-column {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .footer-column h4 {
+            font-size: 15px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .footer-column p {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-bottom p {
+            font-size: 15px;
+            color: #333;
+        }
+
     </style>
 </head>
 
@@ -163,7 +399,7 @@
                 <input type="text" placeholder="Buscar...">
                 <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/busca-icon.png" alt="Buscar" class="search-icon">
             </div>
-            <a href="#">
+            <a href="http://localhost:8080/api/carrinho">
                 <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/carrinho-icon.png" alt="Carrinho" class="nav-icon">
             </a>
         </nav>
@@ -183,12 +419,12 @@
     </div>
 </header>
 
-
 <main>
     <section class="products-section">
         <div class="container-fluid">
             <div class="product-card">
-                <img th:src="@{${produto.imagem}}" alt="Imagem do produto" class="product-image">
+                <img th:src="${'https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/' + produto.imagem}"
+                 alt="Imagem do produto" class="product-image">
                 <div class="product-info">
                     <h2 th:text="${produto.nome}" class="product-title">Nome do Produto</h2>
                     <p th:text="${produto.descricao}" class="product-description">Descrição do Produto</p>
@@ -236,7 +472,7 @@
                         <h4>Contato</h4>
                         <p>Endereço: Rua Exemplo, 123, Bairro, Cidade</p>
                         <p>Horário de Atendimento: Seg - Sex, 9h - 18h</p>
-                        <h4><p>Email: <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></p></h4>
+                        <p>Email: <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></p>
                     </div>
                 </div>
             </div>
@@ -268,6 +504,96 @@
     function removeFromCart() {
         var quantity = document.getElementById('quantity').value;
         alert("Removido do carrinho: " + quantity + " item(s)");
+    }
+
+    function updateCartCount() {
+        fetch('http://localhost:8080/api/carrinho')
+            .then(response => response.json())
+            .then(cart => {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantidade, 0);
+                document.getElementById('cart-count').innerText = totalItems;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    document.getElementById('add-to-cart-button').addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        fetch(`http://localhost:8080/api/carrinho/${productId}`, {
+            method: 'POST'
+        })
+            .then(() => updateCartCount())
+            .catch(error => console.error('Error:', error));
+    });
+
+    document.getElementById('remove-from-cart-button').addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        fetch(`http://localhost:8080/api/carrinho/${productId}`, {
+            method: 'DELETE'
+        })
+            .then(() => updateCartCount())
+            .catch(error => console.error('Error:', error));
+    });
+
+    function fetchCartContent() {
+        fetch('http://localhost:8080/api/carrinho', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+            .then(response => response.json())
+            .then(cartItems => {
+                const cartContentDiv = document.getElementById('cart-content');
+                cartContentDiv.innerHTML = '';
+                if (cartItems.length === 0) {
+                    cartContentDiv.innerHTML = '<p>Seu carrinho está vazio.</p>';
+                    return;
+                }
+                const cartHtml = cartItems.map(item => `
+                <div class="cart-item">
+                    <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/${item.produto.imagem}" alt="${item.produto.nome}">
+                    <div class="cart-item-info">
+                        <h3>${item.produto.nome}</h3>
+                        <p>${item.produto.descricao}</p>
+                        <p>Preço: R$ ${item.preco.toFixed(2)}</p>
+                        <p>Quantidade: ${item.quantidade}</p>
+                        <p>Total: R$ ${(item.preco * item.quantidade).toFixed(2)}</p>
+                    </div>
+                </div>
+            `).join('');
+                cartContentDiv.innerHTML = cartHtml;
+            })
+            .catch(error => {
+                console.error('Erro ao carregar o conteúdo do carrinho:', error);
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchCartContent();
+    });
+
+    function fetchProductInfo(productId) {
+        fetch(`http://localhost:8080/api/usuarios/produtos/${productId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Erro ao buscar informações do produto.');
+                }
+            })
+            .then(product => {
+                window.location.href = `api/usuarios/produtos/${productId}`;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
     }
 </script>
 </html>

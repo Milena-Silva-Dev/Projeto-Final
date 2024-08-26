@@ -4,73 +4,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.1">
-    <title>Página Produto</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Carrinho de Compras</title>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Estilos Gerais */
         body {
             margin: 0;
             font-family: 'Teko', sans-serif;
+            background-color: #F8EEFF;
         }
 
-        /* Products Section */
-        .products-container {
+        header {
+            background-color: #F8EEFF;
+            padding: 10px 10px;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container img {
+            height: 70px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 100px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+        }
+
+        .nav-icon {
+            height: 28px;
+            margin-right: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            padding: 5px;
+            border-radius: 20px;
+        }
+
+        .search-icon {
+            height: 24px;
+            margin-left: 8px;
+        }
+
+        .filter-container {
+            background-color: #F57978;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: black;
+            font-size: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .filter-options {
+            flex: 2;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
+            gap: 30px;
         }
 
-        .product-card {
+        .filter-options a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .filter-options a:hover {
+            text-decoration: underline;
+        }
+
+        .filter-item:last-child {
+            text-align: right;
+        }
+
+        .filter-item:first-child {
+            text-align: left;
+        }
+
+        .cart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .cart-item {
             display: flex;
             align-items: center;
-            background-color: #F8EEFF;
+            justify-content: space-between;
+            background-color: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
             width: 80%;
             max-width: 900px;
-            margin: 20px;
+            margin: 10px 0;
         }
 
-        .product-image {
-            width: 40%;
+        .cart-item-image {
+            width: 100px;
             height: auto;
             border-radius: 10px;
         }
 
-        .product-info {
+        .cart-item-info {
             margin-left: 20px;
             width: 60%;
-            text-align: center;
+            text-align: left;
         }
 
-        .product-title {
-            font-size: 24px;
-            margin: 10px 0;
-            font-family: 'Teko', sans-serif;
+        .cart-item-title {
+            font-size: 18px;
+            margin: 5px 0;
         }
 
-        .product-description {
-            font-size: 20px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .product-price {
-            font-size: 20px;
+        .cart-item-price {
+            font-size: 18px;
             color: #F57978;
-            margin: 10px 0;
-            font-family: 'Teko', sans-serif;
+            margin: 5px 0;
         }
 
-        /* Quantidade e Botões de Ação */
         .quantity-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
         }
 
         .quantity-button {
@@ -79,9 +163,9 @@
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
-            font-size: 10px;
+            font-size: 14px;
             cursor: pointer;
-            font-family: 'Teko', sans-serif;
+            margin: 0 5px;
         }
 
         .quantity-button:hover {
@@ -91,24 +175,7 @@
         .quantity-input {
             width: 50px;
             text-align: center;
-            margin: 0 10px;
             font-size: 16px;
-        }
-
-        .add-to-cart-button {
-            background-color: #F57978;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            font-family: 'Teko', sans-serif;
-            margin-top: 10px;
-        }
-
-        .add-to-cart-button:hover {
-            background-color: #B36F6F;
         }
 
         .remove-from-cart-button {
@@ -119,21 +186,68 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            font-family: 'Teko', sans-serif;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .remove-from-cart-button:hover {
             background-color: #A24B4B;
         }
 
-        /* Outros estilos */
-        .input-field {
+        footer {
+            background-color: #F57978;
+            padding: 10px 10px;
+            border-radius: 15px;
             font-family: 'Teko', sans-serif;
+            margin-top: 20px;
         }
 
-        .subscribe-button {
-            font-family: 'Teko', sans-serif;
+        .footer-info-container {
+            background-color: #F8EEFF;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: auto;
+        }
+
+        .footer-details {
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+            color: #333;
+            width: 70%;
+        }
+
+        .footer-details a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-details a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-bottom p {
+            font-size: 15px;
+            color: #333;
         }
 
     </style>
@@ -163,7 +277,7 @@
                 <input type="text" placeholder="Buscar...">
                 <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/busca-icon.png" alt="Buscar" class="search-icon">
             </div>
-            <a href="#">
+            <a href="carrinho.html">
                 <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/carrinho-icon.png" alt="Carrinho" class="nav-icon">
             </a>
         </nav>
@@ -184,26 +298,12 @@
 </header>
 
 <main>
-    <div class="products-container">
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300" alt="Produto 1" class="product-image">
-            <div class="product-info">
-                <h2 class="product-title">Produto 1</h2>
-                <p class="product-description">Descrição do produto 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <p class="product-price">R$ 99,90</p>
-
-                <!-- Quantidade e Botões de Ação -->
-                <div class="quantity-container">
-                    <button class="quantity-button" onclick="decrementQuantity()">-</button>
-                    <input type="number" id="quantity" value="1" min="1" class="quantity-input">
-                    <button class="quantity-button" onclick="incrementQuantity()">+</button>
-                </div>
-
-                <button class="add-to-cart-button" onclick="addToCart()">Adicionar</button>
-                <button class="remove-from-cart-button" onclick="removeFromCart()">Remover</button>
-            </div>
+    <section class="cart-container">
+        <h1>Carrinho de Compras</h1>
+        <div id="cart-items">
         </div>
-    </div>
+        <button class="checkout-button">Finalizar Compra</button>
+    </section>
 </main>
 
 <footer class="footer-container">
@@ -234,7 +334,7 @@
                         <h4>Contato</h4>
                         <p>Endereço: Rua Exemplo, 123, Bairro, Cidade</p>
                         <p>Horário de Atendimento: Seg - Sex, 9h - 18h</p>
-                        <h4><p>Email: <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></p></h4>
+                        <p>Email: <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></p>
                     </div>
                 </div>
             </div>
@@ -244,28 +344,89 @@
         </div>
     </div>
 </footer>
-</body>
+
 <script>
-    function incrementQuantity() {
-        var quantityInput = document.getElementById('quantity');
-        quantityInput.value = parseInt(quantityInput.value) + 1;
-    }
 
-    function decrementQuantity() {
-        var quantityInput = document.getElementById('quantity');
-        if (parseInt(quantityInput.value) > 1) {
-            quantityInput.value = parseInt(quantityInput.value) - 1;
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartItemsElement = document.getElementById('cart-items');
+        const clearCartButton = document.getElementById('clear-cart');
+
+        function updateCart() {
+            fetch('http://localhost:8080/api/carrinho')
+                .then(response => response.json())
+                .then(items => {
+                    cartItemsElement.innerHTML = '';
+
+                    if (items.length === 0) {
+                        cartItemsElement.innerHTML = '<p>Seu carrinho está vazio.</p>';
+                    } else {
+                        items.forEach(item => {
+                            const cartItemElement = document.createElement('div');
+                            cartItemElement.className = 'cart-item';
+
+                            cartItemElement.innerHTML = `
+                            <img src="https://raw.githubusercontent.com/Milena-Silva-Dev/Projeto-Final/master/src/main/resources/static/image/${item.produto.imagem}" alt="${item.produto.nome}" class="cart-item-image">
+                            <div class="cart-item-info">
+                                <div class="cart-item-title">${item.produto.nome}</div>
+                                <div class="cart-item-price">R$ ${item.preco.toFixed(2)}</div>
+                                <div class="quantity-container">
+                                    <button class="quantity-button" data-action="decrease">-</button>
+                                    <input type="text" class="quantity-input" value="${item.quantidade}" readonly>
+                                    <button class="quantity-button" data-action="increase">+</button>
+                                </div>
+                            </div>
+                            <button class="remove-from-cart-button" data-id="${item.produto.id}">Remover</button>
+                        `;
+
+                            cartItemsElement.appendChild(cartItemElement);
+                        });
+
+                        cartItemsElement.querySelectorAll('.quantity-button').forEach(button => {
+                            button.addEventListener('click', (event) => {
+                                const cartItemElement = event.target.closest('.cart-item');
+                                const itemId = cartItemElement.querySelector('.remove-from-cart-button').dataset.id;
+                                const action = event.target.dataset.action;
+                                const quantityInput = cartItemElement.querySelector('.quantity-input');
+                                let quantity = parseInt(quantityInput.value);
+
+                                if (action === 'increase') {
+                                    quantity++;
+                                    fetch(`http://localhost:8080/api/carrinho/${itemId}`, {
+                                        method: 'POST',
+                                    }).then(() => updateCart());
+                                } else if (action === 'decrease' && quantity > 1) {
+                                    quantity--;
+                                    fetch(`http://localhost:8080/api/carrinho/${itemId}`, {
+                                        method: 'DELETE',
+                                    }).then(() => updateCart());
+                                }
+                            });
+                        });
+
+                        cartItemsElement.querySelectorAll('.remove-from-cart-button').forEach(button => {
+                            button.addEventListener('click', (event) => {
+                                const itemId = event.target.dataset.id;
+
+                                fetch(`http://localhost:8080/api/carrinho/${itemId}`, {
+                                    method: 'DELETE',
+                                }).then(() => updateCart());
+                            });
+                        });
+                    }
+                });
         }
-    }
 
-    function addToCart() {
-        var quantity = document.getElementById('quantity').value;
-        alert("Adicionado ao carrinho: " + quantity + " item(s)");
-    }
+        updateCart();
 
-    function removeFromCart() {
-        var quantity = document.getElementById('quantity').value;
-        alert("Removido do carrinho: " + quantity + " item(s)");
-    }
+        clearCartButton.addEventListener('click', () => {
+            fetch('http://localhost:8080/api/carrinho', {
+                method: 'DELETE',
+            }).then(() => {
+                cartItemsElement.innerHTML = '<p>Seu carrinho está vazio.</p>';
+            });
+        });
+    });
 </script>
+
+</body>
 </html>

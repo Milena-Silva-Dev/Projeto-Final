@@ -16,4 +16,9 @@ public class UsuarioPages {
     return "login";
   }
 
+  @GetMapping("/carrinho")
+  public String carrinho() {
+    return "carrinho";
+  }
+
 }

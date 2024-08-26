@@ -24,22 +24,18 @@ public class UsuarioController {
     @Autowired
     private JwtService jwtService;
 
-    @GetMapping("/me")
-    public ResponseEntity<Usuario> obterUsuarioLogado() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            Object principal = authentication.getPrincipal();
-            System.out.println("Principal: " + principal);
-            System.out.println("Principal Type: " + principal.getClass().getName());
-            if (principal instanceof UserDetails) {
-                UserDetails userDetails = (UserDetails) principal;
-                String email = userDetails.getUsername();
-                Optional<Usuario> usuario = usuarioService.buscarUsuarioPorEmail(email);
-                return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-            }
-        }
+    @PostMapping("/cadastrar")
+    public ResponseEntity<Usuario> cadastrarUser(@RequestBody Usuario usuario) {
+        Usuario novoUser = usuarioService.criarUsuario(usuario);
+        return ResponseEntity.ok(novoUser);
+    }
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @GetMapping("/me")
+    public ResponseEntity<Usuario> getUsuarioAtual() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUsuarioAtual = authentication.getName();
+        Optional<Usuario> usuarioOptional = usuarioService.buscarUsuarioPorEmail(emailUsuarioAtual);
+        return usuarioOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")

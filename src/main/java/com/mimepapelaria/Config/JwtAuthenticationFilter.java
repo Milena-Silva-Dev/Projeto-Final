@@ -29,8 +29,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       System.out.println("Token Received: " + token);
 
       if (jwtService.isValidToken(token)) {
-        Authentication auth = jwtService.getAuthentication(token);
-        return auth;
+        return jwtService.getAuthentication(token);
       } else {
         throw new AuthenticationException("Invalid JWT token") {};
       }

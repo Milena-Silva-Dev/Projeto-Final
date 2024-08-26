@@ -137,8 +137,10 @@
         'senha': senha
       })
     })
-            .then(response => {
-              if (response.ok) {
+            .then(response => response.json())
+            .then(data => {
+              if (data.accessToken) {
+                localStorage.setItem('token', data.accessToken);
                 window.location.href = '/home';
               } else {
                 alert('Falha no login. Verifique suas credenciais.');
@@ -149,5 +151,6 @@
             });
   });
 </script>
+
 </body>
 </html>
